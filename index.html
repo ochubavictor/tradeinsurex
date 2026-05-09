@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Tradeinsurex</title>
-<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -24,7 +24,7 @@ html { scroll-behavior: smooth; }
 body {
   background: var(--bg);
   color: var(--white);
-  font-family: 'Figtree', sans-serif;
+  font-family: 'Inter', sans-serif;
   font-weight: 400;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
@@ -58,8 +58,8 @@ nav.scrolled {
 }
 
 .nav-logo img {
-  width: 36px;
-  height: 36px;
+  width: 48px !important;
+  height: 48px !important;
   object-fit: contain;
 }
 
@@ -320,7 +320,7 @@ nav.scrolled {
 
 /* MANIFESTO */
 .manifesto {
-  padding: 10rem 3rem;
+  padding: 7rem 3rem;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 8rem;
@@ -355,10 +355,35 @@ nav.scrolled {
   color: var(--grey);
   font-weight: 300;
 }
+.manifesto-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: 0;
+}
 
+.manifesto-list li {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--grey);
+  font-weight: 300;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.manifesto-list li::before {
+  content: '';
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent);
+  flex-shrink: 0;
+}
 /* VOICES */
 .voices {
-  padding: 8rem 3rem;
+  padding: 5rem 3rem;
   max-width: 1100px;
   margin: 0 auto;
   border-bottom: 1px solid var(--border);
@@ -432,7 +457,7 @@ nav.scrolled {
 
 /* EVENTS */
 .events {
-  padding: 8rem 3rem;
+  padding: 5rem 3rem;
   max-width: 1100px;
   margin: 0 auto;
   border-bottom: 1px solid var(--border);
@@ -721,11 +746,17 @@ footer {
     <em>secret society.</em><br>
     We disagree.
   </div>
-  <div class="manifesto-right reveal">
-    <p>Most trading education is built to keep you dependent — not independent. Overpriced courses, paid signals, gatekeeping. We built the opposite.</p>
-    <p>Free physical events. Live trade breakdowns. Zoom calls. A community that actually shows up. And if you want something more personal, that exists too.</p>
-    <p>Trading is a skill. Everyone deserves to learn it properly.</p>
-  </div>
+ <div class="manifesto-right reveal">
+  <p>Say it like this so you can sell more. Write it like that so they will feel they are missing something and buy. Do it like this so you can attract more sales. It's turned to a world where everyone is trying to sell and the touch of what makes us human is gone. You can't blame anyone can you? Every little value needs to be monetized these days but that's a story for next time.</p>
+  <ul class="manifesto-list">
+    <li>Free physical class events</li>
+    <li>Live trade breakdowns</li>
+    <li>Zoom calls</li>
+    <li>A community</li>
+    <li>YouTube uploads</li>
+  </ul>
+  <p>This is how we are providing free trading education to people who need it and are willing to work for it.</p>
+</div>
 </section>
 
 <!-- VOICES -->
@@ -737,7 +768,7 @@ footer {
   <div class="voices-grid">
     <div class="voice-item wide reveal">
       <div class="voice-mark">"</div>
-      <p class="voice-text">I don't have friends to my place — but this group makes me feel somebody.</p>
+      <p class="voice-text">I don't have friends to my place but this group makes me feel somebody.</p>
     </div>
     <div class="voice-item reveal">
       <div class="voice-mark">"</div>
@@ -749,7 +780,7 @@ footer {
     </div>
     <div class="voice-item reveal">
       <div class="voice-mark">"</div>
-      <p class="voice-text">This group is awesome — y'all actually want everyone to win while learning. I appreciate it.</p>
+      <p class="voice-text">This group is awesome, y'all actually want everyone to win while learning. I appreciate it.</p>
     </div>
     <div class="voice-item reveal">
       <div class="voice-mark">"</div>
@@ -761,7 +792,7 @@ footer {
     </div>
     <div class="voice-item full reveal">
       <div class="voice-mark">"</div>
-      <p class="voice-text">Your labor of love will return in millions of folds. When you give it away for free it goes and multiplies in places where you least expect it. Little wonder why Sci can make $78m in 1 trade — the universe is storing all your rewards. — V.C Ochuba, ICC</p>
+      <p class="voice-text">Your labor of love will return in millions of folds. When you give it away for free it goes and multiplies in places where you least expect it. Little wonder why Sci can make $78m in 1 trade... the universe is storing all your rewards. - V.C Ochuba, ICC</p>
     </div>
   </div>
 </section>
