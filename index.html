@@ -717,6 +717,58 @@ section, .ticker-wrap, .manifesto, .voices, .events, .video, .reach {
   border-bottom: none;
   border-top: none;
 }
+/* Hide slideshow on desktop, show grid */
+.events-slide { display: none; }
+
+/* Hide grid on mobile, show slideshow */
+@media (max-width: 768px) {
+  .events-grid { display: none; }
+  .events-slide { display: block; margin-top: 2rem; }
+}
+
+.slide-track {
+  display: flex;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+}
+
+.slide-item {
+  min-width: 100%;
+  position: relative;
+  aspect-ratio: 4/3;
+  overflow: hidden;
+  transition: transform 0.5s ease;
+  flex-shrink: 0;
+}
+
+.slide-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.slide-dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.slide-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.2);
+  cursor: pointer;
+  transition: background 0.2s ease;
+  border: none;
+  padding: 0;
+}
+
+.slide-dot.active {
+  background: var(--accent);
+}
 </style>
 </head>
 <body>
@@ -822,23 +874,71 @@ section, .ticker-wrap, .manifesto, .voices, .events, .video, .reach {
 
 <!-- EVENTS -->
 <section class="events" id="events">
-  <div class="events-top reveal">
-    <span class="events-label">In the room</span>
-    <span class="events-label">Enugu, Nigeria</span>
-  </div>
-  <div class="events-grid reveal">
-    <div class="event-photo">
-      <img src="event1.jpeg" alt="Event">
-      <span class="event-label">Live session</span>
+  <div class="events-inner">
+    <div class="events-top reveal">
+      <span class="events-label">In the room</span>
+      <span class="events-label">Enugu, Nigeria</span>
     </div>
-    <div class="event-photo">
-      <img src="event2.jpeg" alt="Community">
-      <span class="event-label">The room</span>
+
+    <!-- Desktop grid - shows 3 images -->
+    <div class="events-grid reveal">
+      <div class="event-photo">
+        <img src="event1.jpeg" alt="Event">
+        <span class="event-label">Live session</span>
+      </div>
+      <div class="event-photo">
+        <img src="event2.jpeg" alt="Community">
+        <span class="event-label">The room</span>
+      </div>
+      <div class="event-photo">
+        <img src="event3.jpeg" alt="Teaching">
+        <span class="event-label">Breaking it down</span>
+      </div>
     </div>
-    <div class="event-photo">
-      <img src="event3.jpeg" alt="Teaching">
-      <span class="event-label">Breaking it down</span>
+
+    <!-- Mobile slideshow - shows all 6 -->
+    <div class="events-slide reveal">
+      <div class="slide-track" id="slideTrack">
+        <div class="slide-item">
+          <img src="event1.jpeg" alt="Event">
+          <span class="event-label">Live session</span>
+        </div>
+        <div class="slide-item">
+          <img src="event2.jpeg" alt="Community">
+          <span class="event-label">The room</span>
+        </div>
+        <div class="slide-item">
+          <img src="event3.jpeg" alt="Teaching">
+          <span class="event-label">Breaking it down</span>
+        </div>
+        <div class="slide-item">
+          <img src="event4.jpeg" alt="Event">
+          <span class="event-label">In the room</span>
+        </div>
+        <div class="slide-item">
+          <img src="event5.jpeg" alt="Event">
+          <span class="event-label">The community</span>
+        </div>
+        <div class="slide-item">
+          <img src="event6.jpeg" alt="Event">
+          <span class="event-label">Every event</span>
+        </div>
+        <div class="slide-item">
+          <img src="event7.jpeg" alt="Event">
+          <span class="event-label">Showing up</span>
+        </div>
+        <div class="slide-item">
+          <img src="event8.jpeg" alt="Event">
+          <span class="event-label">The cap</span>
+        </div>
+        <div class="slide-item">
+          <img src="event9.jpeg" alt="Event">
+          <span class="event-label">At the board</span>
+        </div>
+      </div>
+      <div class="slide-dots" id="slideDots"></div>
     </div>
+
   </div>
 </section>
 
@@ -958,6 +1058,48 @@ section, .ticker-wrap, .manifesto, .voices, .events, .video, .reach {
 
   buildTicker(document.getElementById('ticker1'), items1, 'left');
   buildTicker(document.getElementById('ticker2'), items2, 'right');
+  // Mobile slideshow
+const track = document.getElementById('slideTrack');
+const dotsContainer = document.getElementById('slideDots');
+
+if (track) {
+  const slides = track.querySelectorAll('.slide-item');
+  let current = 0;
+
+  // Create dots
+  slides.forEach((_, i) => {
+    const dot = document.createElement('button');
+    dot.className = 'slide-dot' + (i === 0 ? ' active' : '');
+    dot.addEventListener('click', () => goTo(i));
+    dotsContainer.appendChild(dot);
+  });
+
+  function goTo(index) {
+    current = index;
+    track.style.transform = `translateX(-${current * 100}%)`;
+    document.querySelectorAll('.slide-dot').forEach((d, i) => {
+      d.classList.toggle('active', i === current);
+    });
+  }
+
+  // Auto advance every 4 seconds
+  setInterval(() => {
+    goTo((current + 1) % slides.length);
+  }, 4000);
+
+  // Touch swipe support
+  let startX = 0;
+  track.addEventListener('touchstart', e => startX = e.touches[0].clientX);
+  track.addEventListener('touchend', e => {
+    const diff = startX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 50) {
+      goTo(diff > 0
+        ? Math.min(current + 1, slides.length - 1)
+        : Math.max(current - 1, 0)
+      );
+    }
+  });
+}
 </script>
 </body>
 </html>
