@@ -756,7 +756,7 @@ section, .ticker-wrap, .manifesto, .voices, .events, .video, .reach {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center;
+  object-position: top center;
 }
 
 .slide-dots {
@@ -1069,15 +1069,16 @@ section, .ticker-wrap, .manifesto, .voices, .events, .video, .reach {
 
   buildTicker(document.getElementById('ticker1'), items1, 'left');
   buildTicker(document.getElementById('ticker2'), items2, 'right');
-  // Mobile slideshow
-const track = document.getElementById('slideTrack');
-const dotsContainer = document.getElementById('slideDots');
+// Mobile slideshow
+function initSlideshow() {
+  const track = document.getElementById('slideTrack');
+  const dotsContainer = document.getElementById('slideDots');
+  if (!track || !dotsContainer) return;
 
-if (track) {
-  const slides = track.querySelectorAll('.slide-item');
+  const slides = Array.from(track.querySelectorAll('.slide-item'));
   let current = 0;
 
-  // Create dots
+  dotsContainer.innerHTML = '';
   slides.forEach((_, i) => {
     const dot = document.createElement('button');
     dot.className = 'slide-dot' + (i === 0 ? ' active' : '');
@@ -1093,24 +1094,18 @@ if (track) {
     });
   }
 
-  // Auto advance every 4 seconds
-  setInterval(() => {
-    goTo((current + 1) % slides.length);
-  }, 4000);
+  setInterval(() => goTo((current + 1) % slides.length), 4000);
 
-  // Touch swipe support
   let startX = 0;
-  track.addEventListener('touchstart', e => startX = e.touches[0].clientX);
+  track.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
   track.addEventListener('touchend', e => {
     const diff = startX - e.changedTouches[0].clientX;
     if (Math.abs(diff) > 50) {
-      goTo(diff > 0
-        ? Math.min(current + 1, slides.length - 1)
-        : Math.max(current - 1, 0)
-      );
+      goTo(diff > 0 ? Math.min(current + 1, slides.length - 1) : Math.max(current - 1, 0));
     }
   });
 }
+initSlideshow();
 </script>
 </body>
 </html>
