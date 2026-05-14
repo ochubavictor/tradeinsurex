@@ -718,27 +718,37 @@ section, .ticker-wrap, .manifesto, .voices, .events, .video, .reach {
   border-top: none;
 }
 /* Hide slideshow on desktop, show grid */
-.events-slide { display: none; }
+.events-slide {
+  display: none;
+  overflow: hidden;
+  width: 100%;
+  position: relative;
+}
 
 /* Hide grid on mobile, show slideshow */
 @media (max-width: 768px) {
   .events-grid { display: none; }
-  .events-slide { display: block; margin-top: 2rem; }
+  .events-slide {
+    display: block;
+    overflow: hidden;
+    width: 100%;
+    margin-top: 2rem;
+  }
 }
 
 .slide-track {
   display: flex;
-  overflow: hidden;
-  position: relative;
   width: 100%;
+  overflow: visible;
+  position: relative;
+  transition: transform 0.5s ease;
 }
 
 .slide-item {
   min-width: 100%;
   position: relative;
-  aspect-ratio: 4/3;
+  aspect-ratio: 16/9;
   overflow: hidden;
-  transition: transform 0.5s ease;
   flex-shrink: 0;
 }
 
@@ -746,6 +756,7 @@ section, .ticker-wrap, .manifesto, .voices, .events, .video, .reach {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center;
 }
 
 .slide-dots {
