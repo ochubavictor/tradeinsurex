@@ -717,64 +717,12 @@ section, .ticker-wrap, .manifesto, .voices, .events, .video, .reach {
   border-bottom: none;
   border-top: none;
 }
-/* Hide slideshow on desktop, show grid */
-.events-slide {
-  display: none;
-  overflow: hidden;
-  width: 100%;
-  position: relative;
-}
-
-/* Hide grid on mobile, show slideshow */
-@media (max-width: 768px) {
-  .events-grid { display: none; }
-  .events-slide {
-    display: block;
-    overflow: hidden;
-    width: 100%;
-    margin-top: 2rem;
-  }
-}
-
-.slide-track {
-  display: flex;
-  width: 100%;
-  overflow: visible;
-  position: relative;
-  transition: transform 0.5s ease;
-}
-
-.slide-item {
-  min-width: 100%;
-  position: relative;
-  overflow: hidden;
-  flex-shrink: 0;
-  height: 300px;
-}
 
 .slide-item img {
   width: 100%;
   height: 100%;
   object-fit: contain;
   background: #000;
-}
-
-.slide-dots {
-  display: flex;
-  justify-content: center;
-  gap: 0.5rem;
-  margin-top: 1rem;
-}
-
-.slide-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.2);
-  cursor: pointer;
-  transition: background 0.2s ease;
-  border: none;
-  padding: 0;
 }
 
 .slide-dot.active {
@@ -906,46 +854,6 @@ section, .ticker-wrap, .manifesto, .voices, .events, .video, .reach {
         <span class="event-label">Breaking it down</span>
       </div>
     </div>
-
-    <!-- Mobile slideshow - shows all 6 -->
-    <div class="events-slide reveal">
-      <div class="slide-track" id="slideTrack">
-        <div class="slide-item">
-          <img src="event1.jpeg" alt="Event">
-          <span class="event-label">Live session</span>
-        </div>
-        <div class="slide-item">
-          <img src="event2.jpeg" alt="Community">
-          <span class="event-label">The room</span>
-        </div>
-        <div class="slide-item">
-          <img src="event3.jpeg" alt="Teaching">
-          <span class="event-label">Breaking it down</span>
-        </div>
-        <div class="slide-item">
-          <img src="event4.jpeg" alt="Event">
-          <span class="event-label">In the room</span>
-        </div>
-        <div class="slide-item">
-          <img src="event5.jpeg" alt="Event">
-          <span class="event-label">The community</span>
-        </div>
-        <div class="slide-item">
-          <img src="event6.jpeg" alt="Event">
-          <span class="event-label">Every event</span>
-        </div>
-        <div class="slide-item">
-          <img src="event7.jpeg" alt="Event">
-          <span class="event-label">Showing up</span>
-        </div>
-        <div class="slide-item">
-          <img src="event8.jpeg" alt="Event">
-          <span class="event-label">The cap</span>
-        </div>
-        </div>
-      <div class="slide-dots" id="slideDots"></div>
-    </div>
-
   </div>
 </section>
 
@@ -1065,43 +973,6 @@ section, .ticker-wrap, .manifesto, .voices, .events, .video, .reach {
 
   buildTicker(document.getElementById('ticker1'), items1, 'left');
   buildTicker(document.getElementById('ticker2'), items2, 'right');
-// Mobile slideshow
-function initSlideshow() {
-  const track = document.getElementById('slideTrack');
-  const dotsContainer = document.getElementById('slideDots');
-  if (!track || !dotsContainer) return;
-
-  const slides = Array.from(track.querySelectorAll('.slide-item'));
-  let current = 0;
-
-  dotsContainer.innerHTML = '';
-  slides.forEach((_, i) => {
-    const dot = document.createElement('button');
-    dot.className = 'slide-dot' + (i === 0 ? ' active' : '');
-    dot.addEventListener('click', () => goTo(i));
-    dotsContainer.appendChild(dot);
-  });
-
-  function goTo(index) {
-    current = index;
-    track.style.transform = `translateX(-${current * 100}%)`;
-    document.querySelectorAll('.slide-dot').forEach((d, i) => {
-      d.classList.toggle('active', i === current);
-    });
-  }
-
-  setInterval(() => goTo((current + 1) % slides.length), 4000);
-
-  let startX = 0;
-  track.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
-  track.addEventListener('touchend', e => {
-    const diff = startX - e.changedTouches[0].clientX;
-    if (Math.abs(diff) > 50) {
-      goTo(diff > 0 ? Math.min(current + 1, slides.length - 1) : Math.max(current - 1, 0));
-    }
-  });
-}
-initSlideshow();
 </script>
 </body>
 </html>
