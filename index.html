@@ -747,16 +747,16 @@ section, .ticker-wrap, .manifesto, .voices, .events, .video, .reach {
 .slide-item {
   min-width: 100%;
   position: relative;
-  aspect-ratio: 16/9;
   overflow: hidden;
   flex-shrink: 0;
+  height: 250px;
 }
 
 .slide-item img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  object-position: top center;
+  object-fit: contain;
+  background: #000;
 }
 
 .slide-dots {
